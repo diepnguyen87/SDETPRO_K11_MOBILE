@@ -3,6 +3,8 @@ package src;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.MobileElement;
 import io.appium.java_client.android.AndroidDriver;
+import io.appium.java_client.ios.IOSDriver;
+import io.appium.java_client.remote.AndroidMobileCapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
 
 import java.net.URL;
@@ -15,10 +17,9 @@ public class AppiumLaunchTest {
         DesiredCapabilities desiredCapabilities = new DesiredCapabilities();
         desiredCapabilities.setCapability("platformName", "android");
         desiredCapabilities.setCapability("automationName", "uiautomator2");
-        desiredCapabilities.setCapability("udid", "32009a815a33c5e1");
+        desiredCapabilities.setCapability("udid", "MJSKLVNJAUDEPRV8");
         desiredCapabilities.setCapability("appPackage", "com.wdiodemoapp");
         desiredCapabilities.setCapability("appActivity", "com.wdiodemoapp.MainActivity");
-
         URL appiumServer = null;
         try {
             appiumServer = new URL("http://localhost:4723/wd/hub");
@@ -29,7 +30,7 @@ public class AppiumLaunchTest {
         if(appiumServer == null){
             throw new RuntimeException("[ERR] Somehow, we couldn't construct Appium server URL");
         }
-        driver = new AndroidDriver<>(appiumServer, desiredCapabilities);
+        driver = new AndroidDriver<MobileElement>(appiumServer, desiredCapabilities);
 
         //DEBUG PURPOSE ONLY
         Thread.sleep(3000);
