@@ -18,14 +18,23 @@ public class HomePO extends CommonFunctions {
     public void navToSwipePage() {
         MobileElement swipeBtnElem = driver.findElement(MobileBy.AccessibilityId("Swipe"));
         swipeBtnElem.click();
-        WebDriverWait wait = new WebDriverWait(driver, 5L);
-        wait.until(ExpectedConditions.visibilityOfElementLocated(MobileBy.AndroidUIAutomator("new UiSelector().textContains(\"Swipe horizontal\")")));
+        waitToElementVisible(driver, MobileBy.AndroidUIAutomator("new UiSelector().textContains(\"Swipe horizontal\")"));
     }
 
     public void navToFormsPage() {
         MobileElement formsBtnElem = driver.findElement(MobileBy.AccessibilityId("Forms"));
         formsBtnElem.click();
-        WebDriverWait wait = new WebDriverWait(driver, 5L);
-        wait.until(ExpectedConditions.visibilityOfElementLocated(MobileBy.AndroidUIAutomator("new UiSelector().textContains(\"Form components\")")));
+        waitToElementVisible(driver, MobileBy.AndroidUIAutomator("new UiSelector().textContains(\"Form components\")"));
+    }
+
+    public void navToWebViewPage() {
+        MobileElement webviewBtnElem = driver.findElement(MobileBy.AccessibilityId("Webview"));
+        webviewBtnElem.click();
+    }
+
+    public void navToLoginPage() {
+        MobileElement loginBtnElem = driver.findElement(MobileBy.AccessibilityId("Login"));
+        loginBtnElem.click();
+        waitToElementVisible(driver, MobileBy.AndroidUIAutomator("new UiSelector().textContains(\"Sign up Form\")"));
     }
 }

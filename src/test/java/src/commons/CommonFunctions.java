@@ -4,11 +4,18 @@ import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.MobileBy;
 import io.appium.java_client.MobileElement;
 import io.appium.java_client.touch.offset.PointOption;
+import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.util.List;
 
 public class CommonFunctions {
+
+    private WebDriverWait explicitWait;
+    private static final long SHORT_TIME = 5L;
+    private static final long LONG_TIME = 10L;
 
     public MobileElement findElementByXpath(AppiumDriver<MobileElement> driver, String xpath) {
 
@@ -30,6 +37,11 @@ public class CommonFunctions {
             return null;
         }
         return element;
+    }
+
+    public void waitToElementVisible(AppiumDriver<MobileElement> driver, By locator){
+        explicitWait = new WebDriverWait(driver, SHORT_TIME);
+        explicitWait.until(ExpectedConditions.visibilityOfElementLocated(locator));
     }
 
     public PointOption[] calculateSwipeCoordinates(AppiumDriver<MobileElement> driver, int xStart, int xEnd, int yStart, int yEnd){
