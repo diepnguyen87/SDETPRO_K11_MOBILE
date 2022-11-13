@@ -21,7 +21,7 @@ public class LoginFormComponent {
         return appiumDriver.findElement(emailSel);
     }
 
-    public static MobileElement passwordElem(){
+    public MobileElement passwordElem(){
         return appiumDriver.findElement(passwordSel);
     }
 

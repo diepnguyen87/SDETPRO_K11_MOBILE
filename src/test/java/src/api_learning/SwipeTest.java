@@ -25,6 +25,10 @@ public class SwipeTest {
 
             //Swipe to extendable card
             swipePage.swipeToCard(SwipeUI.EXTENDABLE_CARD, cardList.size(), 70, 10, 70, 70);
+            swipePage.clickToCard(SwipeUI.EXTENDABLE_CARD);
+            Thread.sleep(3000);
+            swipePage.backToPreviousPage();
+            Thread.sleep(3000);
 
         } catch (Exception e) {
             e.printStackTrace();

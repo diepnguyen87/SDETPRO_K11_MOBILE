@@ -1,8 +1,12 @@
 package src.page_object;
 
 import io.appium.java_client.AppiumDriver;
+import io.appium.java_client.MobileBy;
 import io.appium.java_client.MobileElement;
 import io.appium.java_client.TouchAction;
+import io.appium.java_client.android.AndroidDriver;
+import io.appium.java_client.android.nativekey.AndroidKey;
+import io.appium.java_client.android.nativekey.KeyEvent;
 import io.appium.java_client.touch.WaitOptions;
 import io.appium.java_client.touch.offset.PointOption;
 import src.commons.CommonFunctions;
@@ -44,5 +48,14 @@ public class SwipePO extends CommonFunctions {
     private int getNumOfCard(String xpath){
         List<MobileElement> elementList = findElementsByXpath(driver, xpath);
         return elementList.size();
+    }
+
+    public void clickToCard(String extendableCard) {
+        MobileElement card = findElementByXpath(driver, extendableCard);
+        card.click();
+    }
+
+    public void backToPreviousPage() {
+        ((AndroidDriver)driver).pressKey(new KeyEvent(AndroidKey.BACK));
     }
 }
