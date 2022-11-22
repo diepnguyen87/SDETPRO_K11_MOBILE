@@ -6,6 +6,8 @@ import io.appium.java_client.MobileElement;
 import org.apache.commons.validator.routines.EmailValidator;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.Assert;
+import org.testng.asserts.SoftAssert;
 import src.models.components.login.LoginFormComponentMode03;
 import src.models.pages.LoginScreenMode03;
 import src.test_flows.BaseFlow;
@@ -14,11 +16,13 @@ public class LoginFlow extends BaseFlow {
 
     private String email;
     private String password;
+    private SoftAssert softAssert;
 
     public LoginFlow(AppiumDriver<MobileElement> appiumDriver, String email, String password) {
         super(appiumDriver);
         this.email = email;
         this.password = password;
+        softAssert = new SoftAssert();
     }
 
     public void login(){
@@ -52,6 +56,7 @@ public class LoginFlow extends BaseFlow {
         if(!isPasswordValid){
             verifyIncorrectPasswordLogin(loginFormComponent);
         }
+        softAssert.assertAll();
     }
 
     private boolean isEmailValid() {
@@ -66,27 +71,23 @@ public class LoginFlow extends BaseFlow {
 
         String actualSuccessAlertTitle = loginForm.getAlertTitle();
         String expectedSuccessAlertTitle = "Success";
-        System.out.println("Actual: " + actualSuccessAlertTitle);
-        System.out.println("Expected: " + expectedSuccessAlertTitle);
+        softAssert.assertEquals(actualSuccessAlertTitle, expectedSuccessAlertTitle);
 
         String actualSuccessAlertMessage = loginForm.getAlertMessage();
         String expectedSuccessAlertMessage = "You are logged in!";
-        System.out.println("Actual: " + actualSuccessAlertMessage);
-        System.out.println("Expected: " + expectedSuccessAlertMessage);
+        softAssert.assertEquals(actualSuccessAlertMessage, expectedSuccessAlertMessage);
     }
 
     private void verifyIncorrectEmailLogin(LoginFormComponentMode03 loginForm) {
         String actualInvalidEmailTxt = loginForm.invalidEmailTxt();
         String expectedInvalidEmailTxt = "Please enter a valid email address";
-        System.out.println("Actual: " + actualInvalidEmailTxt);
-        System.out.println("Expected: " + expectedInvalidEmailTxt);
+        softAssert.assertEquals(actualInvalidEmailTxt, expectedInvalidEmailTxt);
     }
 
     private void verifyIncorrectPasswordLogin(LoginFormComponentMode03 loginForm) {
         String actualInvalidPasswordTxt = loginForm.invalidPasswordTxt();
         String expectedInvalidPasswordTxt = "Please enter at least 8 characters";
-        System.out.println("Actual: " + actualInvalidPasswordTxt);
-        System.out.println("Expected: " + expectedInvalidPasswordTxt);
+        softAssert.assertEquals(actualInvalidPasswordTxt, expectedInvalidPasswordTxt);
     }
 
 }
