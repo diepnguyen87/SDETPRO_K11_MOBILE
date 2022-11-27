@@ -15,7 +15,7 @@ public class LoginTest {
 
     @Test
     public void TestLogin(){
-        AppiumDriver<MobileElement> appiumDriver = DriverFactory.getDriver(Platform.Android);
+        AppiumDriver<MobileElement> appiumDriver = DriverFactory.getDriver(Platform.IOS);
         try {
 
             for (LoginCred loginCredentialDatum : loginCredDataSet()) {

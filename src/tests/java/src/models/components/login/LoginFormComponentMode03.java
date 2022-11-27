@@ -3,6 +3,7 @@ package src.models.components.login;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.MobileBy;
 import io.appium.java_client.MobileElement;
+import io.qameta.allure.Step;
 import lombok.Data;
 import org.openqa.selenium.By;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -19,11 +20,13 @@ public class LoginFormComponentMode03 {
     private static final By loginBtnSel = MobileBy.AccessibilityId("button-LOGIN");
     private static final By loginSuccessAlertTitleSel = MobileBy.id("android:id/alertTitle");
     private static final By loginSuccessAlertMessageSel = MobileBy.id("android:id/message");
+    private static final By okBtnSel = MobileBy.id("android:id/button1");
 
     public LoginFormComponentMode03(AppiumDriver<MobileElement> appiumDriver) {
         this.appiumDriver = appiumDriver;
     }
 
+    @Step("input email as {email}")
     public LoginFormComponentMode03 inputEmail(String email) {
         MobileElement emailElem = appiumDriver.findElement(emailSel);
         emailElem.clear();
@@ -35,6 +38,7 @@ public class LoginFormComponentMode03 {
         return appiumDriver.findElement(incorrectEmailTxtSel).getText();
     }
 
+    @Step("input password as {password}")
     public LoginFormComponentMode03 inputPassword(String password) {
         MobileElement passwordElem = appiumDriver.findElement(passwordSel);
         passwordElem.clear();
@@ -65,4 +69,8 @@ public class LoginFormComponentMode03 {
         return new BottomNavCommponent(appiumDriver);
     }
 
+    @Step("Click on Login button")
+    public void clickOnOKBtn() {
+        appiumDriver.findElement(okBtnSel).click();
+    }
 }

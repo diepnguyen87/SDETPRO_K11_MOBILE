@@ -1,0 +1,6 @@
+"Status","Start Time","Stop Time","Duration in ms","Parent Suite","Suite","Sub Suite","Test Class","Test Method","Name","Description"
+"passed","Fri Nov 25 17:13:42 ICT 2022","Fri Nov 25 17:13:46 ICT 2022","3871","Regression","Authentication","src.tests.authen.LoginTestWithBaseTest","src.tests.authen.LoginTestWithBaseTest","TestLogin","TestLogin",""
+"passed","Fri Nov 25 17:13:51 ICT 2022","Fri Nov 25 17:13:57 ICT 2022","6354","Regression","Authentication","src.tests.authen.LoginTestWithBaseTest","src.tests.authen.LoginTestWithBaseTest","TestLogin","TestLogin",""
+"passed","Fri Nov 25 17:13:46 ICT 2022","Fri Nov 25 17:13:51 ICT 2022","5108","Regression","Authentication","src.tests.authen.LoginTestWithBaseTest","src.tests.authen.LoginTestWithBaseTest","TestLogin","TestLogin",""
+"failed","Fri Nov 25 17:13:57 ICT 2022","Fri Nov 25 17:14:34 ICT 2022","37052","Regression","Authentication","src.tests.swipe.SwipeTest","src.tests.swipe.SwipeTest","swipeTest","swipeTest",""
+"passed","Fri Nov 25 17:13:29 ICT 2022","Fri Nov 25 17:13:42 ICT 2022","12609","Regression","Authentication","src.tests.authen.LoginTestWithBaseTest","src.tests.authen.LoginTestWithBaseTest","TestLogin","TestLogin",""

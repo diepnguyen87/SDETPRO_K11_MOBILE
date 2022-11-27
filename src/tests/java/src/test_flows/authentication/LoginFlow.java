@@ -47,6 +47,7 @@ public class LoginFlow extends BaseFlow {
 
         if(isEmailValid && isPasswordValid){
             verifyCorrectLoginCredential(loginFormComponent);
+            closeSuccessPopup(loginFormComponent);
         }
 
         if(!isEmailValid){
@@ -77,6 +78,11 @@ public class LoginFlow extends BaseFlow {
         String expectedSuccessAlertMessage = "You are logged in!";
         softAssert.assertEquals(actualSuccessAlertMessage, expectedSuccessAlertMessage);
     }
+
+    private void closeSuccessPopup(LoginFormComponentMode03 loginForm) {
+        loginForm.clickOnOKBtn();
+    }
+
 
     private void verifyIncorrectEmailLogin(LoginFormComponentMode03 loginForm) {
         String actualInvalidEmailTxt = loginForm.invalidEmailTxt();
