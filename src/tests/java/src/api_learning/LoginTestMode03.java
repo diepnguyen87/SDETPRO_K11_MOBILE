@@ -10,7 +10,7 @@ import src.models.pages.LoginScreenMode03;
 public class LoginTestMode03 {
 
     public static void main(String[] args) {
-        AppiumDriver<MobileElement> appiumDriver = DriverFactory.getDriver(Platform.Android);
+        AppiumDriver<MobileElement> appiumDriver = DriverFactory.getDriver(Platform.android);
         try {
             LoginScreenMode03 loginScreen = new LoginScreenMode03(appiumDriver);
             loginScreen.bottomNavCommponent().clickOnLoginIcon();

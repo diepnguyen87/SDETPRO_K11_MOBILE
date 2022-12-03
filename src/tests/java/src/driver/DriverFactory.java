@@ -13,19 +13,11 @@ public class DriverFactory implements MobileCapabilityTypeEx, AppPackage {
 
     private AppiumDriver<MobileElement> appiumDriver;
 
-    public AppiumDriver<MobileElement> getDriver(Platform platform, String udid, String systemPort) {
+    public AppiumDriver<MobileElement> getDriver(Platform platform, String udid, String systemPort, String platformVersion) {
         if (appiumDriver == null) {
-            DesiredCapabilities desiredCapabilities = new DesiredCapabilities();
-            desiredCapabilities.setCapability(PLATFORM_NAME, "android");
-            desiredCapabilities.setCapability(AUTOMATION_NAME, "uiautomator2");
-            desiredCapabilities.setCapability(UDID, udid);
-            desiredCapabilities.setCapability(APP_PACKAGE, WEBDRIVER_IO);
-            desiredCapabilities.setCapability(APP_ACTIVITY, "com.wdiodemoapp.MainActivity");
-            desiredCapabilities.setCapability(SYSTEM_PORT, systemPort);
-
             URL appiumServer = null;
             try {
-                appiumServer = new URL("http://localhost:4723/wd/hub");
+                appiumServer = new URL("http://10.2.2.22:4545/wd/hub");
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -34,12 +26,27 @@ public class DriverFactory implements MobileCapabilityTypeEx, AppPackage {
                 throw new RuntimeException("[ERR] Somehow, we couldn't construct Appium server URL");
             }
 
+            DesiredCapabilities desiredCaps = new DesiredCapabilities();
+            desiredCaps.setCapability(PLATFORM_NAME, platform);
+
             switch (platform) {
-                case IOS:
-                    appiumDriver = new IOSDriver<>(appiumServer, desiredCapabilities);
+                case ios:
+                    desiredCaps.setCapability(AUTOMATION_NAME, "XCUITest");
+                    desiredCaps.setCapability(DEVICE_NAME, udid);
+                    desiredCaps.setCapability(PLATFORM_VERSION, platformVersion);
+                    desiredCaps.setCapability(BUNDLE_ID, "org.wdioNativeDemoApp");
+                    desiredCaps.setCapability(WDA_LOCAL_PORT, systemPort);
+
+                    appiumDriver = new IOSDriver<>(appiumServer, desiredCaps);
                     break;
-                case Android:
-                    appiumDriver = new AndroidDriver<>(appiumServer, desiredCapabilities);
+                case android:
+                    desiredCaps.setCapability(AUTOMATION_NAME, "uiautomator2");
+                    desiredCaps.setCapability(UDID, udid);
+                    desiredCaps.setCapability(APP_PACKAGE, WEBDRIVER_IO);
+                    desiredCaps.setCapability(APP_ACTIVITY, "com.wdiodemoapp.MainActivity");
+                    desiredCaps.setCapability(SYSTEM_PORT, systemPort);
+
+                    appiumDriver = new AndroidDriver<>(appiumServer, desiredCaps);
                     break;
                 default:
                     throw new IllegalArgumentException("Platform type can not be null");
@@ -82,10 +89,10 @@ public class DriverFactory implements MobileCapabilityTypeEx, AppPackage {
         }
 
         switch (platform) {
-            case IOS:
+            case ios:
                 driver = new IOSDriver<>(appiumServer, desiredCapabilities);
                 break;
-            case Android:
+            case android:
                 driver = new AndroidDriver<>(appiumServer, desiredCapabilities);
                 break;
             default:

@@ -10,7 +10,7 @@ import src.page_object.HomePO;
 public class FormsTest {
 
     public static void main(String[] args) {
-        AppiumDriver<MobileElement> appiumDriver = DriverFactory.getDriver(Platform.Android);
+        AppiumDriver<MobileElement> appiumDriver = DriverFactory.getDriver(Platform.android);
         HomePO homePage = new HomePO(appiumDriver);
         homePage.navToFormsPage();
         FormsPO formPage = new FormsPO(appiumDriver);

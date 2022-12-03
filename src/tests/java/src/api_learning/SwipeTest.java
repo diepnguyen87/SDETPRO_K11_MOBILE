@@ -13,7 +13,7 @@ import java.util.List;
 public class SwipeTest {
 
     public static void main(String[] args) {
-        AppiumDriver<MobileElement> appiumDriver = DriverFactory.getDriver(Platform.Android);
+        AppiumDriver<MobileElement> appiumDriver = DriverFactory.getDriver(Platform.android);
         HomePO homePage = new HomePO(appiumDriver);
 
         try {

@@ -9,6 +9,7 @@ import org.testng.ITestResult;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
+import org.testng.annotations.Optional;
 import org.testng.annotations.Parameters;
 import src.driver.DriverFactory;
 import src.driver.Platform;
@@ -26,16 +27,21 @@ public class BaseTest {
     private static ThreadLocal<DriverFactory> driverThread;
     private String udid;
     private String systemPort;
+    private String platformName;
+    private String platformVersion;
 
     protected AppiumDriver<MobileElement> getDriver() {
-        return driverThread.get().getDriver(Platform.Android, udid, systemPort);
+        return driverThread.get().getDriver(Platform.valueOf(platformName), udid, systemPort, platformVersion);
     }
 
     @BeforeTest()
-    @Parameters({"udid", "systemPort"})
-    public void initAppiumSession(String udid, String systemPort) {
+    @Parameters({"udid", "systemPort", "platformName", "platformVersion"})
+    public void initAppiumSession(String udid, String systemPort, String platformName, @Optional("platformVersion") String platformVersion) {
         this.udid = udid;
         this.systemPort = systemPort;
+        this.platformName = platformName;
+        this.platformVersion = platformVersion;
+
         driverThread = ThreadLocal.withInitial(() -> {
             DriverFactory driverthead = new DriverFactory();
             driverThreadPool.add(driverthead);
@@ -81,7 +87,7 @@ public class BaseTest {
 
             //3. File location to save
             String fileName = testMethodName + "-" + takenTime + ".png";
-            String fileLocation = System.getProperty("user.dir") + "/screenshot/" + fileName;
+            String fileLocation = System.getProperty("user.dir") + "/screenshots/" + fileName;
 
             //4. Capture and attach into report
             File screenshotBase64 = getDriver().getScreenshotAs(OutputType.FILE);
