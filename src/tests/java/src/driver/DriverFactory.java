@@ -14,10 +14,32 @@ public class DriverFactory implements MobileCapabilityTypeEx, AppPackage {
     private AppiumDriver<MobileElement> appiumDriver;
 
     public AppiumDriver<MobileElement> getDriver(Platform platform, String udid, String systemPort, String platformVersion) {
+        String remoteInfoViaEnvVar = System.getenv("env");
+        String remoteInfoViaCommandVar = System.getProperty("env");
+        String isRemote = remoteInfoViaEnvVar == null ? remoteInfoViaCommandVar : remoteInfoViaEnvVar;
+
+        String targetServer = "https://localhost:4723/wd/hub";
+        if(isRemote.equals("true")){
+            String hubIPAddress = System.getenv("hub");
+            if (hubIPAddress == null) {
+                hubIPAddress = System.getProperty("hub");
+            }
+
+            if(hubIPAddress == null){
+                throw new IllegalArgumentException("Please provide hub ip address via env variable [hub]!");
+            }
+
+            targetServer = hubIPAddress + ":4545/wd/hub";
+        }
+
+        if(isRemote == null){
+            throw new IllegalArgumentException("Please provide env variable [env]!");
+        }
+
         if (appiumDriver == null) {
             URL appiumServer = null;
             try {
-                appiumServer = new URL("http://10.2.2.22:4545/wd/hub");
+                appiumServer = new URL(targetServer);
             } catch (Exception e) {
                 e.printStackTrace();
             }
