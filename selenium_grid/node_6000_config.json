@@ -15,7 +15,7 @@
     "maxSession": 1,
     "register": true,
     "registerCycle": 5000,
-    "hubHost": "10.2.2.22",
+    "hubHost": "192.168.0.102",
     "hubPort": 4545,
     "hubProtocol": "http"
   }
