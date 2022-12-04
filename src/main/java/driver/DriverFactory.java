@@ -18,7 +18,7 @@ public class DriverFactory implements MobileCapabilityTypeEx, AppPackage {
         String remoteInfoViaCommandVar = System.getProperty("remote");
         String isRemote = remoteInfoViaEnvVar == null ? remoteInfoViaCommandVar : remoteInfoViaEnvVar;
 
-        String targetServer = "https://localhost:4723/wd/hub";
+        String targetServer = "http://localhost:4723/wd/hub";
         if(isRemote.equals("true")){
             String hubIPAddress = System.getenv("hub");
             if (hubIPAddress == null) {

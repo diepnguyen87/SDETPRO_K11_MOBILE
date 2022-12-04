@@ -5,8 +5,16 @@
     <parameter name="platformVersion" value="15.0"/>
     <parameter name="udid" value="PNXGAM88C1002502"/>
     <parameter name="platformName" value="android"/>
-    <parameter name="systemPort" value="8975"/>
+    <parameter name="systemPort" value="8807"/>
     <classes>
+      <class name="tests.webview.WebViewtest">
+        <methods>
+          <include name="testWebView"/>
+          <include name="initAppiumSession"/>
+          <include name="captureScreenshot"/>
+          <include name="quitAppiumSession"/>
+        </methods>
+      </class> <!-- tests.webview.WebViewtest -->
       <class name="tests.swipe.SwipeTest">
         <methods>
           <include name="initAppiumSession"/>
@@ -15,40 +23,6 @@
           <include name="quitAppiumSession"/>
         </methods>
       </class> <!-- tests.swipe.SwipeTest -->
-      <class name="tests.webview.WebViewtest">
-        <methods>
-          <include name="initAppiumSession"/>
-          <include name="testWebView"/>
-          <include name="captureScreenshot"/>
-          <include name="quitAppiumSession"/>
-        </methods>
-      </class> <!-- tests.webview.WebViewtest -->
     </classes>
   </test> <!-- PNXGAM88C1002502(failed) -->
-  <test thread-count="10" parallel="tests" name="MJSKLVNJAUDEPRV8(failed)">
-    <parameter name="platformVersion" value="15.0"/>
-    <parameter name="udid" value="MJSKLVNJAUDEPRV8"/>
-    <parameter name="platformName" value="android"/>
-    <parameter name="systemPort" value="8488"/>
-    <classes>
-      <class name="tests.authen.LoginTest">
-        <methods>
-          <include name="TestLogin"/>
-        </methods>
-      </class> <!-- tests.authen.LoginTest -->
-      <class name="tests.authen.LoginTestWithDataProvider">
-        <methods>
-          <include name="TestLogin"/>
-        </methods>
-      </class> <!-- tests.authen.LoginTestWithDataProvider -->
-      <class name="tests.authen.LoginTestWithBaseTest">
-        <methods>
-          <include name="initAppiumSession"/>
-          <include name="captureScreenshot"/>
-          <include name="TestLogin"/>
-          <include name="quitAppiumSession"/>
-        </methods>
-      </class> <!-- tests.authen.LoginTestWithBaseTest -->
-    </classes>
-  </test> <!-- MJSKLVNJAUDEPRV8(failed) -->
 </suite> <!-- Failed suite [Regression] -->

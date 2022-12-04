@@ -8,7 +8,7 @@
         <parameter name="platformVersion" value="13.0"/>
         <parameter name="systemPort" value="8400" />
         <classes>
-            <class name="src.tests.authen.LoginTestWithBaseTest" />
+            <class name="tests.authen.LoginTestWithBaseTest" />
         </classes>
     </test>
 

@@ -26,7 +26,7 @@ public class LoginTestWithBaseTest extends BaseTest {
 
     @DataProvider(name = "loginData")
     private LoginCred[] loginCredDataSet() {
-        String fileLocation = "/main/java/tests/gson/login.json";
+        String fileLocation = "/src/main/java/api_learning/gson/login.json";
         LoginCred[] loginCredentialData = DataObjectBuilder.buildDataObject(fileLocation, LoginCred[].class);
         return loginCredentialData;
     }

@@ -6,7 +6,7 @@
         <parameter name="udid" value="MJSKLVNJAUDEPRV8"/>
         <parameter name="systemPort" value="8300" />
         <classes>
-            <class name="src.tests.authen.LoginTestWithBaseTest" />
+            <class name="tests.authen.LoginTestWithBaseTest" />
         </classes>
     </test>
 
