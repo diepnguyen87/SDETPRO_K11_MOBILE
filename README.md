@@ -120,4 +120,7 @@ You can base on below checklist to automate the app
 ## Download App
 Please go to: https://github.com/sdetpro-blog/sdetpro-shop-app/releases
 
-
+## Execute shell on Jenkins
+mvn clean package -DskipTests=true
+java -Dplatform=${platform} -Dremote=${remote} -Dhub=${hub} -jar ./target/SDETPRO_K11_MOBILE-1.0-SNAPSHOT-fat-tests.jar
+mvn clean test -Dsurefire.suiteXmlFiles=src/main/resources/test-suites/Regression.xml

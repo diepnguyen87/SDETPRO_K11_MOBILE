@@ -28,17 +28,24 @@ public class WebViewtest extends BaseTest {
         homePage.navToWebViewPage();
         WebViewPO webviewPage = new WebViewPO(appiumDriver);
 
-
         WebDriverWait wait = new WebDriverWait(appiumDriver, 5L);
         wait.until(new WaitMoreThanOneContext(appiumDriver));
 
         //print all available contexts
-        for (String context : appiumDriver.getContextHandles()) {
-            System.out.println(context);
+        String webviewContext = "";
+        for (String contextName : appiumDriver.getContextHandles()) {
+            System.out.println(contextName);
+            if (contextName.startsWith("WEBVIEW")){
+                webviewContext = contextName;
+            }
+        }
+
+        if(webviewContext.isEmpty()){
+            throw new RuntimeException("[ERROR] - There is no context start with WEBVIEW");
         }
 
         //Switch webview context
-        appiumDriver.context(Contexts.WEB_VIEW);
+        appiumDriver.context(webviewContext);
         WebElement navToogleBtnElem = appiumDriver.findElementByCssSelector(".navbar__toggle");
         navToogleBtnElem.click();
         List<MobileElement> menuItemsElem = appiumDriver.findElementsByCssSelector(".menu__list li a");
@@ -64,7 +71,6 @@ public class WebViewtest extends BaseTest {
         //Switch back native context
         appiumDriver.context(Contexts.NATIVE);
         appiumDriver.findElement(MobileBy.AccessibilityId("Home")).click();
-
     }
 
     public static class MenuItemData {
