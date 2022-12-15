@@ -6,13 +6,10 @@ import io.qameta.allure.Allure;
 import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.OutputType;
 import org.testng.ITestResult;
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.AfterTest;
-import org.testng.annotations.BeforeTest;
-import org.testng.annotations.Optional;
-import org.testng.annotations.Parameters;
+import org.testng.annotations.*;
 import driver.DriverFactory;
 import driver.Platform;
+import org.testng.annotations.Optional;
 
 import java.io.File;
 import java.io.InputStream;
@@ -23,7 +20,7 @@ import java.util.*;
 
 public class BaseTest {
 
-    private List<DriverFactory> driverThreadPool = Collections.synchronizedList(new ArrayList<>());
+    private static final List<DriverFactory> driverThreadPool = Collections.synchronizedList(new ArrayList<>());
     private static ThreadLocal<DriverFactory> driverThread;
     private String udid;
     private String systemPort;
@@ -34,14 +31,23 @@ public class BaseTest {
         return driverThread.get().getDriver(Platform.valueOf(platformName), udid, systemPort, platformVersion);
     }
 
-    @BeforeTest()
+    @BeforeClass
     @Parameters({"udid", "systemPort", "platformName", "platformVersion"})
-    public void initAppiumSession(String udid, String systemPort, String platformName, @Optional("platformVersion") String platformVersion) {
+    public void getTestParams(String udid, String systemPort, String platformName, @Optional("platformVersion") String platformVersion){
         this.udid = udid;
         this.systemPort = systemPort;
         this.platformName = platformName;
         this.platformVersion = platformVersion;
+    }
 
+    @BeforeTest()
+    @Parameters({"udid", "systemPort", "platformName", "platformVersion"})
+    public void initAppiumSession(String udid, String systemPort, String platformName, @Optional("platformVersion") String platformVersion) {
+        /*this.udid = udid;
+        this.systemPort = systemPort;
+        this.platformName = platformName;
+        this.platformVersion = platformVersion;
+*/
         driverThread = ThreadLocal.withInitial(() -> {
             DriverFactory driverthead = new DriverFactory();
             driverThreadPool.add(driverthead);
@@ -54,7 +60,7 @@ public class BaseTest {
         driverThread.get().quitAppiumSession();
     }
 
-    @AfterMethod
+    @AfterMethod(description = "Capture screenshot if test is failed")
     public void captureScreenshot(ITestResult result) {
         if (result.getStatus() == ITestResult.FAILURE) {
             //1. Get method name
@@ -81,7 +87,6 @@ public class BaseTest {
             takenTimeStringBuilder.append(mins);
             takenTimeStringBuilder.append("-");
             takenTimeStringBuilder.append(s);
-            takenTimeStringBuilder.append("-");
 
             String takenTime = takenTimeStringBuilder.toString();
 

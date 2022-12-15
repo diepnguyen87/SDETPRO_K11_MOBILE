@@ -33,4 +33,20 @@ public class BottomNavCommponent {
     public void clickOnLoginIcon(){
         loginIconSel.click();
     }
+
+    @AndroidFindBy(accessibility = "Webview")
+    @iOSXCUITFindBy(iOSNsPredicate = "label == \"Webview\"")
+    private MobileElement webviewIconSel;
+
+    public void clickOnWebviewIcon(){
+        webviewIconSel.click();
+    }
+
+    @AndroidFindBy(accessibility = "Swipe")
+    @iOSXCUITFindBy(iOSNsPredicate = "label == \"Swipe\"")
+    private MobileElement swipeIconSel;
+
+    public void clickOnSwipeIcon(){
+        swipeIconSel.click();
+    }
 }

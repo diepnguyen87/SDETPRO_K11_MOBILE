@@ -5,38 +5,39 @@ import io.appium.java_client.MobileElement;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.ios.IOSDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
+import org.testng.annotations.Optional;
 
 import java.net.URL;
 import java.util.concurrent.TimeUnit;
 
 public class DriverFactory implements MobileCapabilityTypeEx, AppPackage {
 
-    private AppiumDriver<MobileElement> appiumDriver;
+    AppiumDriver<MobileElement> appiumDriver;
 
     public AppiumDriver<MobileElement> getDriver(Platform platform, String udid, String systemPort, String platformVersion) {
-        String remoteInfoViaEnvVar = System.getenv("remote");
-        String remoteInfoViaCommandVar = System.getProperty("remote");
-        String isRemote = remoteInfoViaEnvVar == null ? remoteInfoViaCommandVar : remoteInfoViaEnvVar;
-
-        String targetServer = "http://localhost:4723/wd/hub";
-        if(isRemote.equals("true")){
-            String hubIPAddress = System.getenv("hub");
-            if (hubIPAddress == null) {
-                hubIPAddress = System.getProperty("hub");
-            }
-
-            if(hubIPAddress == null){
-                throw new IllegalArgumentException("Please provide hub ip address via env variable [hub]!");
-            }
-
-            targetServer = hubIPAddress + ":4545/wd/hub";
-        }
-
-        if(isRemote == null){
-            throw new IllegalArgumentException("Please provide remote variable [remote]!");
-        }
-
         if (appiumDriver == null) {
+            String remoteInfoViaEnvVar = System.getenv("remote");
+            String remoteInfoViaCommandVar = System.getProperty("remote");
+            String isRemote = remoteInfoViaEnvVar == null ? remoteInfoViaCommandVar : remoteInfoViaEnvVar;
+
+            String targetServer = "http://localhost:4723/wd/hub";
+            if(isRemote.equals("true")){
+                String hubIPAddress = System.getenv("hub");
+                if (hubIPAddress == null) {
+                    hubIPAddress = System.getProperty("hub");
+                }
+
+                if(hubIPAddress == null){
+                    throw new IllegalArgumentException("Please provide hub ip address via env variable [hub]!");
+                }
+
+                targetServer = hubIPAddress + ":4444/wd/hub";
+            }
+
+            if(isRemote == null){
+                throw new IllegalArgumentException("Please provide remote variable [remote]!");
+            }
+
             URL appiumServer = null;
             try {
                 appiumServer = new URL(targetServer);

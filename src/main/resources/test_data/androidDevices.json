@@ -1,0 +1,23 @@
+[
+  {
+    "UDID": "5200593f4fdb1597",
+    "deviceName": "Galaxy J7 Pro",
+    "platformVersion": "8.1"
+  },
+  {
+    "UDID": "emulator-5554",
+    "deviceName": "Nexus_4_API_30",
+    "platformVersion": "11"
+  }
+  /*
+ {
+   "UDID": "MJSKLVNJAUDEPRV8",
+   "deviceName": "Oppo F9",
+   "platformVersion": "10"
+ }
+{
+   "UDID": "PNXGAM88C1002502",
+   "deviceName": "Nokia 8.1",
+   "platformVersion": "11"
+ }*/
+]

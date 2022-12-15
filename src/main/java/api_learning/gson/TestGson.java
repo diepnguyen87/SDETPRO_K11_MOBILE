@@ -7,7 +7,7 @@ public class TestGson {
 
     public static void main(String[] args) {
         //from Json to Object
-        String fileLocation = "/main/java/tests/gson/login.json";
+        String fileLocation = "/src/main/java/api_learning/gson/login.json";
         LoginCred[] loginCred = DataObjectBuilder.buildDataObject(fileLocation, LoginCred[].class);
         for (LoginCred cred : loginCred) {
             System.out.println(cred);

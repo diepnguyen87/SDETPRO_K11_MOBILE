@@ -16,7 +16,7 @@
         <parameter name="udid" value="PNXGAM88C1002502" />
         <parameter name="systemPort" value="8400" />
         <classes>
-            <class name="src.tests.webview.WebViewtest" />
+            <class name="src.api_learning.webview.WebViewtest" />
         </classes>
     </test>-->
 </suite>

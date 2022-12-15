@@ -1,12 +1,15 @@
 package tests;
 
 import com.google.common.reflect.ClassPath;
+import com.google.gson.Gson;
+import models.devices.DeviceCaps;
 import org.testng.TestNG;
 import org.testng.xml.XmlClass;
 import org.testng.xml.XmlSuite;
 import org.testng.xml.XmlTest;
 import driver.MobileCapabilityTypeEx;
 import driver.Platform;
+import test_data.utils.DataObjectBuilder;
 
 import java.io.IOException;
 import java.security.SecureRandom;
@@ -26,38 +29,52 @@ public class Main implements MobileCapabilityTypeEx {
             boolean isBaseTestClass = classInfoNam.startsWith("tests.BaseTest");
             boolean isMainTestClass = classInfoNam.startsWith("tests.Main");
 
-            if(startWithTestDot && !isBaseTestClass && !isMainTestClass){
+            if (startWithTestDot && !isBaseTestClass && !isMainTestClass) {
                 testClasses.add(info.load());
             }
         }
 
         //get platform
-        String platformName = System.getProperty("platform");
-        //String platformName = System.getenv("platform");
+        //String platformName = System.getProperty("platform");
+        String platformName = System.getenv("platform");
 
-        if(platformName == null){
+        if (platformName == null) {
             throw new IllegalArgumentException("[ERROR] Please provide platform name via -Dplatform");
         }
 
-        try{
+        try {
             Platform.valueOf(platformName);
-        }catch (Exception e){
+        } catch (Exception e) {
             throw new IllegalArgumentException("[ERROR] We don't support platform: " + platformName + ", supported platforms: " + Arrays.toString(Platform.values()));
         }
 
         //Devices under test
-        List<String> iphoneDeviceList = Arrays.asList("iPhone 8 (12.0)", "iphone XS Max");
+      /*  List<String> iphoneDeviceList = Arrays.asList("iPhone 8 (13.0)");
         List<String> androidDeviceList = Arrays.asList("MJSKLVNJAUDEPRV8", "PNXGAM88C1002502");
         List<String> deviceList = platformName.equalsIgnoreCase("ios") ? iphoneDeviceList : androidDeviceList;
+*/
+        //
+        Gson gson = new Gson();
+        String androidsFileLocation = "/src/main/resources/test_data/androidDevices.json";
+        String iosFileLocation = "/src/main/resources/test_data/iosDevices.json";
+
+        DeviceCaps[] androidDevices = DataObjectBuilder.buildDataObject(androidsFileLocation, DeviceCaps[].class);
+        DeviceCaps[] iosDevices = DataObjectBuilder.buildDataObject(iosFileLocation, DeviceCaps[].class);
+
+        List<DeviceCaps> iphoneDeviceList = Arrays.asList(iosDevices);
+        List<DeviceCaps> androidDeviceList = Arrays.asList(androidDevices);
+        List<DeviceCaps> deviceList = platformName.equalsIgnoreCase("ios") ? iphoneDeviceList : androidDeviceList;
 
         //Assign test classes into devices
         final int testNumberEachDevice = testClasses.size() / deviceList.size();
-        Map<String, List<Class<?>>> deviceCaps = new HashMap<>();
+        //Map<String, List<Class<?>>> deviceCaps = new HashMap<>();
+        Map<DeviceCaps, List<Class<?>>> deviceCaps = new HashMap<>();
+
         for (int deviceIndex = 0; deviceIndex < deviceList.size(); deviceIndex++) {
             int startIndex = deviceIndex * testNumberEachDevice;
             boolean isLastDevice = deviceIndex == deviceList.size() - 1;
             int endIndex = isLastDevice ? testClasses.size() : startIndex + testNumberEachDevice;
-            List<Class<?>> subTestList =  testClasses.subList(startIndex, endIndex);
+            List<Class<?>> subTestList = testClasses.subList(startIndex, endIndex);
             deviceCaps.put(deviceList.get(deviceIndex), subTestList);
         }
 
@@ -67,18 +84,18 @@ public class Main implements MobileCapabilityTypeEx {
         suite.setName("Regression");
 
         List<XmlTest> allTest = new ArrayList<>();
-        for (String deviceName : deviceCaps.keySet()) {
+        for (DeviceCaps device : deviceCaps.keySet()) {
             XmlTest test = new XmlTest(suite);
-            test.setName(deviceName);
+            test.setName(device.toString());
             List<XmlClass> xmlClasses = new ArrayList<>();
-            List<Class<?>> dedicatedClasses = deviceCaps.get(deviceName);
+            List<Class<?>> dedicatedClasses = deviceCaps.get(device);
             for (Class<?> dedicatedClass : dedicatedClasses) {
                 xmlClasses.add(new XmlClass(dedicatedClass.getName()));
             }
             test.setXmlClasses(xmlClasses);
-            test.addParameter(UDID, deviceName);
+            test.addParameter(UDID, device.getUDID());
             test.addParameter(PLATFORM_NAME, platformName);
-            test.addParameter(PLATFORM_VERSION, "12.0");
+            test.addParameter(PLATFORM_VERSION, device.getPlatformVersion());
             test.addParameter(SYSTEM_PORT, String.valueOf(new SecureRandom().nextInt(1000) + 8300));
             allTest.add(test);
         }

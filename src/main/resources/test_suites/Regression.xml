@@ -10,7 +10,7 @@
         </classes>
     </test>
 
-    <test name="Authentication 03" >
+   <!-- <test name="Authentication 03" >
         <parameter name="platformName" value="ios" />
         <parameter name="udid" value="iPhone 8"/>
         <parameter name="platformVersion" value="13.0"/>
@@ -18,13 +18,13 @@
         <classes>
             <class name="tests.authen.LoginTestWithBaseTest" />
         </classes>
-    </test>
+    </test>-->
 
   <!--  <test name="Webview" >
         <parameter name="udid" value="PNXGAM88C1002502" />
         <parameter name="systemPort" value="8400" />
         <classes>
-            <class name="tests.webview.WebViewtest" />
+            <class name="api_learning.webview.WebViewtest" />
         </classes>
     </test>-->
 </suite>
